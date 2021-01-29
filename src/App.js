@@ -1,22 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+// import { listNotes } from './graphql/queries';
+// import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
+import { API, Storage } from 'aws-amplify';
+import Dashboard from '../src/pages/Dashboard'
 
-// In this component we've used the `withAuthenticator` component. 
-//     - Scaffolds out an entire user authentication flow 
-//     - ALLOWS users to •sign up •sign in •reset their password
-//     - Confirms sign in for multifactor authentication (MFA). 
-// We've also used the AmplifySignOut component which will render a Sign Out button.
+const initialFormState = { name: '', description: '' }
 
 function App()
 {
+  const [notes, setNotes] = useState( [] );
+  const [formData, setFormData] = useState( initialFormState );
+
+  // useEffect( () =>
+  // {
+  //   fetchNotes();
+  // }, [] );
+
+  // async function fetchNotes() {
+  //   const apiData = await API.graphql({ query: listNotes });
+  //   setNotes(apiData.data.listNotes.items);
+  // }
+
+  // Update the fetchNotes function to fetch an image if there is an image associated with a note
+
+  // In the main App function, create a new onChange function to handle the image upload
+  // async function onChange( e )
+  // {
+  //   if ( !e.target.files[0] ) return
+  //   const file = e.target.files[0];
+  //   setFormData( { ...formData, image: file.name } );
+  //   await Storage.put( file.name, file );
+  //   fetchNotes();
+  // }
+
   return (
     <div className="App">
-      <header>
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>We now have Auth!</h1>
-      </header>
+     <Dashboard />
       <AmplifySignOut />
     </div>
   );
